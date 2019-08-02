@@ -11,8 +11,8 @@ spr = {}
     spr.r = 90
     spr.depConst = 115
 
-    crosscentervarx = 0
-    crosscentervary = 0
+    crosscenterVX = 0
+    crosscenterVY = 0
     crossvar=8
    
 
@@ -25,8 +25,8 @@ function love.update(dt)
     --Control of main spr
     SprControl(dt)
  
-    crosscenterX = spr.x + crosscentervarx
-    crosscenterY = spr.y + crosscentervary
+    crosscenterX = spr.x + crosscenterVX
+    crosscenterY = spr.y + crosscenterVY
     
 end
 
@@ -81,15 +81,19 @@ function SprControl(pDT)
 
     --SPR ORIGIN PTS INPUTS
     if love.keyboard.isDown("left") then 
-        crosscentervarx = crosscentervarx - crossvar
+        crosscenterVX = crosscenterVX - crossvar
     end
     if love.keyboard.isDown("right") then 
-        crosscentervarx = crosscentervarx + crossvar
+        crosscenterVX = crosscenterVX + crossvar
     end
     if love.keyboard.isDown("up") then 
-        crosscentervary = crosscentervary - crossvar
+        crosscenterVY = crosscenterVY - crossvar
     end
     if love.keyboard.isDown("down") then 
-        crosscentervary = crosscentervary + crossvar
-    end
+        crosscenterVY = crosscenterVY + crossvar
+    end    
+
 end
+
+
+
