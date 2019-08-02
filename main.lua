@@ -8,14 +8,15 @@ spr = {}
     spr.y = 100
     spr.ox = 0
     spr.oy = 0
-    spr.r = 90
+    spr.r = 0
     spr.depConst = 115
 
-    crosscenterVX = 0
-    crosscenterVY = 0
-    crossvar=8
+crossVX = 0
+crossVY = 0
+crossDepConst = 8
    
-
+mouse = {}
+   
 
 function love.load()
     
@@ -25,29 +26,40 @@ function love.update(dt)
     --Control of main spr
     SprControl(dt)
  
-    crosscenterX = spr.x + crosscenterVX
-    crosscenterY = spr.y + crosscenterVY
+    --Faux
+    crossCenterX = spr.x + spr.ox
+    crossCenterY = spr.y + spr.oy
     
+    --Mouse position for Debuging
+    mouse.x, mouse.y = love.mouse.getPosition()
+
 end
 
 function love.draw()
     -- II- AFFICHER le sprite
     --love.graphics.draw(bg, 0, 0)
-
-    --Reset the color choice of "setColor()"
-    love.graphics.reset()
     love.graphics.draw(spr.img, spr.x, spr.y, math.rad(spr.r), 1, 1, spr.ox, spr.oy)
     
     --draw a red cross on img.ox & oy
     love.graphics.setColor(255,0,0)
-    love.graphics.line(crosscenterX-5, crosscenterY-5, crosscenterX+5, crosscenterY+5)
-    love.graphics.line(crosscenterX+5, crosscenterY-5, crosscenterX-5, crosscenterY+5)
+    love.graphics.line(crossCenterX-5, crossCenterY-5, crossCenterX+5, crossCenterY+5)
+    love.graphics.line(crossCenterX+5, crossCenterY-5, crossCenterX-5, crossCenterY+5)
+    love.graphics.rectangle("fill", 250, 250, 10, 10)
+    --Reset the color choice of "setColor()"
+    love.graphics.reset()
 
+    --############# DEBUG PRINT ##################
     love.graphics.print("ox: "..spr.ox, 600, 10)
     love.graphics.print("oy: "..spr.oy, 600, 20)
     love.graphics.print("x: "..spr.x, 600, 30)
     love.graphics.print("y: "..spr.y, 600, 40)
     love.graphics.print("r en degrés: "..spr.r, 600, 60)
+    --Print of Mouse Pos Debuggin
+    if mouse.x ~= nil and mouse.y ~= nil then
+        love.graphics.print("Mouse X: "..mouse.x, 600, 80)
+        love.graphics.print("Mouse Y: "..mouse.y, 600, 90)
+    end
+
 
 end
 
@@ -81,16 +93,16 @@ function SprControl(pDT)
 
     --SPR ORIGIN PTS INPUTS
     if love.keyboard.isDown("left") then 
-        crosscenterVX = crosscenterVX - crossvar
+        spr.ox = spr.ox - crossDepConst 
     end
     if love.keyboard.isDown("right") then 
-        crosscenterVX = crosscenterVX + crossvar
+        spr.ox = spr.ox + crossDepConst 
     end
     if love.keyboard.isDown("up") then 
-        crosscenterVY = crosscenterVY - crossvar
+        spr.oy = spr.oy - crossDepConst 
     end
     if love.keyboard.isDown("down") then 
-        crosscenterVY = crosscenterVY + crossvar
+        spr.oy = spr.oy + crossDepConst 
     end    
 
 end
